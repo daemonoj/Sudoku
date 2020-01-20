@@ -14,9 +14,6 @@ def create_sudoku():
 			  [0,0,9,3,0,0,0,7,4],
 			  [0,4,0,0,5,0,0,3,6],
 			  [7,0,3,0,1,8,0,0,0]]
-	# print_sudoku(sudoku)
-	# display.display_s
-	# sudoku(sudoku,0,(0,0))
 	return sudoku
 
 
@@ -160,17 +157,12 @@ def solve_sudoku(sudoku):
 				# row check column check and block check
 				# we fill that number to the cell and move onto the next empty cell
 				# also append the cell location to the empty list
-				# sudoku[i][j] = k
-				# display_sudoku(sudoku,k,(i,j))
-				# print(k,' ', i,j)
 				if check_row(k,j,sudoku) and check_column(k,i,sudoku) and check_block(k,j,i,sudoku):
 					sudoku[i][j] = k
 					empty_list.append((i,j))
 					# resetting the value of k
 					# so that it starts checking from 1 again for the next empty cell
 					k = 1
-					# print(empty_list)
-					# print_sudoku(sudoku)
 					break
 				# incase none of the values from 1 to 9 fit the given cell
 				# we need to back track to the last cell that had a value less than 9
@@ -195,8 +187,6 @@ def solve_sudoku(sudoku):
 
 	display_sudoku(sudoku, 4, (0,0))
 
-# sudoku = create_sudoku()
-# solve_sudoku(sudoku)
 """-----------------------------------GUI------------------------------------"""
 import tkinter
 
@@ -235,13 +225,8 @@ def display_sudoku(sudoku, k, position):
 fixed_arr = []
 def display_base_sudoku(sudoku):
 	for i in range(len(sudoku)):
-		# print("in loop")
 		for j in range(len(sudoku[i])):
-			# print("in loop")
 			x,y = i, j
-			# exec("cell"+str(x)+str(y)+" = tkinter.Frame(baseframe, height=40, width=40, borderwidth = 3, relief= tkinter.SUNKEN)")
-			# eval('cell'+str(x)+str(y)+'.grid(row = '+ str(y) + ', column = '+ str(x) + ')')
-			# cell_arr.append(eval('cell'+str(x)+str(y))
 			value = sudoku[i][j]
 			text = value if value != 0 else ' '
 			eval('label' + str(i) + str(j)).config(text = text,  fg = 'black', height=1, width=2)
@@ -250,21 +235,11 @@ def display_base_sudoku(sudoku):
 				fixed_arr.append((i,j))
 	print(fixed_arr)
 sudoku = create_sudoku()
-# sudoku = [[0,0,0,2,6,0,7,0,1],
-# 		  [6,8,0,0,7,0,0,9,0],
-# 		  [1,9,0,0,0,4,5,0,0],
-# 		  [8,2,0,1,0,0,0,4,0],
-# 		  [0,0,4,6,0,2,9,0,0],
-# 		  [0,5,0,0,0,3,0,2,8],
-# 		  [0,0,9,3,0,0,0,7,4],
-# 		  [0,4,0,0,5,0,0,3,6],
-# 		  [7,0,3,0,1,8,0,0,0]]
 
 window = tkinter.Tk()
 window.title('Solving Sudoku...')
 baseframe = tkinter.Frame(window)
-# add_grids(baseframe)
-# display_sudoku(sudoku, 0,(0,0))
+
 for x in range(0,9):
 	for y in range(0,9):
 		exec("cell"+str(x)+str(y)+" = tkinter.Frame(baseframe, height=40, width=40, borderwidth = 3, relief= tkinter.SUNKEN)")

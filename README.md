@@ -5,6 +5,7 @@ So far there is a python code that can be used for solving a given SUDOKU.
 TODO: Create a GUI representation for the solving.
 The idea is to show how the PC solves the SUDOKU by inserting each number into the cells and proceeding with whatever satisfies with the conditions.
 It should also show backtracking incase no solution is found for the current table.
+COMPLETE: Created a GUI using tkinter which shows the initial Sudoku and starts solving when pressing solve button. The animation shows step by step how numbers are put in and checked for each cell and backtracks when no solution is found for paticular cell
 
 TODO: Write code to generate random SUDOKU.
 The idea is to create a solved sudoku and remove numbers from it randomly and try to see if the given sudoku is solvable or not.

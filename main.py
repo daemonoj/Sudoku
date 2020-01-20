@@ -4,6 +4,7 @@
 	Returns a double dimension matrix of size 9x9
 	Also prints the original Sudoku
 """ 
+import time
 def create_sudoku():
 	sudoku = [[0,0,0,2,6,0,7,0,1],
 			  [6,8,0,0,7,0,0,9,0],
@@ -157,6 +158,8 @@ def solve_sudoku(sudoku):
 				# row check column check and block check
 				# we fill that number to the cell and move onto the next empty cell
 				# also append the cell location to the empty list
+				display_sudoku(sudoku, k , (i,j))
+				time.sleep(0.5)
 				if check_row(k,j,sudoku) and check_column(k,i,sudoku) and check_block(k,j,i,sudoku):
 					sudoku[i][j] = k
 					empty_list.append((i,j))
@@ -184,8 +187,6 @@ def solve_sudoku(sudoku):
 			j=0
 		if i>8:
 			break
-
-	display_sudoku(sudoku, 4, (0,0))
 
 """-----------------------------------GUI------------------------------------"""
 import tkinter
@@ -221,6 +222,7 @@ def display_sudoku(sudoku, k, position):
 				x,y = i,j
 				eval('label' + str(i) + str(j)).config(text = text,  fg = 'black',bg = 'white', height=1, width=2)
 				eval('label' + str(i) + str(j)).pack()
+	window.update()
 
 fixed_arr = []
 def display_base_sudoku(sudoku):
@@ -242,7 +244,7 @@ baseframe = tkinter.Frame(window)
 
 for x in range(0,9):
 	for y in range(0,9):
-		exec("cell"+str(x)+str(y)+" = tkinter.Frame(baseframe, height=40, width=40, borderwidth = 3, relief= tkinter.SUNKEN)")
+		exec("cell"+str(x)+str(y)+" = tkinter.Frame(baseframe, height=60, width=60, borderwidth = 3, relief= tkinter.SUNKEN)")
 		eval('cell'+str(x)+str(y)+'.grid(row = '+ str(y) + ', column = '+ str(x) + ')')
 for i in range(0,9):
 	for j in range(0,9):

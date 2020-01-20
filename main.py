@@ -14,7 +14,9 @@ def create_sudoku():
 			  [0,0,9,3,0,0,0,7,4],
 			  [0,4,0,0,5,0,0,3,6],
 			  [7,0,3,0,1,8,0,0,0]]
-	print_sudoku(sudoku)
+	# print_sudoku(sudoku)
+	# display.display_s
+	# sudoku(sudoku,0,(0,0))
 	return sudoku
 
 
@@ -152,20 +154,23 @@ def solve_sudoku(sudoku):
 			# this loop runs till all the values uptill that point are filled and
 			# satisfy the solution
 			while True:
-				print('Checking for Value: ',k)
-				print('At location: ', i, j)
+				# print('Checking for Value: ',k)
+				# print('At location: ', i, j)
 				# if a solution value passes all the checks
 				# row check column check and block check
 				# we fill that number to the cell and move onto the next empty cell
 				# also append the cell location to the empty list
+				# sudoku[i][j] = k
+				# display_sudoku(sudoku,k,(i,j))
+				# print(k,' ', i,j)
 				if check_row(k,j,sudoku) and check_column(k,i,sudoku) and check_block(k,j,i,sudoku):
 					sudoku[i][j] = k
 					empty_list.append((i,j))
 					# resetting the value of k
 					# so that it starts checking from 1 again for the next empty cell
 					k = 1
-					print(empty_list)
-					print_sudoku(sudoku)
+					# print(empty_list)
+					# print_sudoku(sudoku)
 					break
 				# incase none of the values from 1 to 9 fit the given cell
 				# we need to back track to the last cell that had a value less than 9
@@ -188,10 +193,96 @@ def solve_sudoku(sudoku):
 		if i>8:
 			break
 
+	display_sudoku(sudoku, 4, (0,0))
 
-if __name__ == "__main__":
-	sudoku = create_sudoku()
-	solve_sudoku(sudoku)
+# sudoku = create_sudoku()
+# solve_sudoku(sudoku)
+"""-----------------------------------GUI------------------------------------"""
+import tkinter
 
-else:
-	print("Run from main")
+# def add_grids(baseframe):
+# 	for x in range(0,9):
+# 		for y in range(0,9):
+# 			exec("global cell"+str(x)+str(y)+" = tkinter.Frame(baseframe, height=40, width=40, borderwidth = 3, relief= tkinter.SUNKEN)")
+# 			eval('cell'+str(x)+str(y)+'.grid(row = '+ str(y) + ', column = '+ str(x) + ')')
+
+def add_solve_button(frame):
+	# frame = tkinter.Frame(window)
+	button = tkinter.Button(frame, text = 'Solve', command=lambda: solve_sudoku(sudoku))
+	button.grid()
+
+# def display_cell(value, pos):
+
+def display_sudoku(sudoku, k, position):
+	for i in range(0,9):
+		for j in range(0,9):
+			value = sudoku[i][j]
+			pos = (i,j)
+			if pos in fixed_arr:
+				continue
+			if pos == position:
+				text = k
+				x,y = i,j
+				eval('label' + str(i) + str(j)).config(text = text,  fg = 'black',bg = 'white', height=1, width=2)
+				eval('label' + str(i) + str(j)).pack()
+
+			else:
+				text = value if str(value) != 0 else ' '
+				x,y = i,j
+				eval('label' + str(i) + str(j)).config(text = text,  fg = 'black',bg = 'white', height=1, width=2)
+				eval('label' + str(i) + str(j)).pack()
+
+fixed_arr = []
+def display_base_sudoku(sudoku):
+	for i in range(len(sudoku)):
+		# print("in loop")
+		for j in range(len(sudoku[i])):
+			# print("in loop")
+			x,y = i, j
+			# exec("cell"+str(x)+str(y)+" = tkinter.Frame(baseframe, height=40, width=40, borderwidth = 3, relief= tkinter.SUNKEN)")
+			# eval('cell'+str(x)+str(y)+'.grid(row = '+ str(y) + ', column = '+ str(x) + ')')
+			# cell_arr.append(eval('cell'+str(x)+str(y))
+			value = sudoku[i][j]
+			text = value if value != 0 else ' '
+			eval('label' + str(i) + str(j)).config(text = text,  fg = 'black', height=1, width=2)
+			eval('label' + str(i) + str(j)).pack()
+			if value!=0:
+				fixed_arr.append((i,j))
+	print(fixed_arr)
+sudoku = create_sudoku()
+# sudoku = [[0,0,0,2,6,0,7,0,1],
+# 		  [6,8,0,0,7,0,0,9,0],
+# 		  [1,9,0,0,0,4,5,0,0],
+# 		  [8,2,0,1,0,0,0,4,0],
+# 		  [0,0,4,6,0,2,9,0,0],
+# 		  [0,5,0,0,0,3,0,2,8],
+# 		  [0,0,9,3,0,0,0,7,4],
+# 		  [0,4,0,0,5,0,0,3,6],
+# 		  [7,0,3,0,1,8,0,0,0]]
+
+window = tkinter.Tk()
+window.title('Solving Sudoku...')
+baseframe = tkinter.Frame(window)
+# add_grids(baseframe)
+# display_sudoku(sudoku, 0,(0,0))
+for x in range(0,9):
+	for y in range(0,9):
+		exec("cell"+str(x)+str(y)+" = tkinter.Frame(baseframe, height=40, width=40, borderwidth = 3, relief= tkinter.SUNKEN)")
+		eval('cell'+str(x)+str(y)+'.grid(row = '+ str(y) + ', column = '+ str(x) + ')')
+for i in range(0,9):
+	for j in range(0,9):
+		exec('label' + str(i) + str(j) + ' = tkinter.Label(' + "cell"+str(j)+str(i) + ')')
+
+display_base_sudoku(sudoku)
+baseframe.pack(padx=5, pady=5)
+button_frame = tkinter.Frame(window)
+add_solve_button(button_frame)
+button_frame.pack(pady=5)
+window.mainloop()
+"""
+TODO: Would like to actually create a method
+that would take string, function and window and create a button
+with that string and mapped to given method on the given window
+"""
+# add_solve_button(window)
+
